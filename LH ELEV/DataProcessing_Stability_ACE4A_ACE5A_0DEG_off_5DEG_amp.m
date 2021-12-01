@@ -16,11 +16,19 @@ load('currentACE5_stability_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat');
 % sysACE5_stab_ACE4A_ACE5A_0DEG_off_5DEG_amp = tfest(responseACE4,3);
 % Response estimation
 window = 1024;
-maxFreq = 25;
+ext_window = 1024*4;
+maxFreq = 30;
 minFreq = 0.5;
 rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp = (round(window*minFreq*0.5/62.5)+1):(round(window*maxFreq*0.5/62.5)+1);
+ext_rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp = (round(ext_window*minFreq*0.5/62.5)+1):(round(ext_window*maxFreq*0.5/62.5)+1);
+
 [transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp,freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp]= tfestimate(demand_stability_ACE4A_ACE5A_0DEG_off_5DEG_amp.data,...
     ramPosACE4_stability_ACE4A_ACE5A_0DEG_off_5DEG_amp.data,window,[],[],125);
+[ext_transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp,ext_freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp]= tfestimate(demand_stability_ACE4A_ACE5A_0DEG_off_5DEG_amp.data,...
+    ramPosACE4_stability_ACE4A_ACE5A_0DEG_off_5DEG_amp.data,ext_window,[],[],125);
 save('rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp');
+save('ext_rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','ext_rangefreq_ACE4A_ACE5A_0DEG_off_5DEG_amp');
 save('freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp');
+save('ext_freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','ext_freqDemandRam_ACE4A_ACE5A_0DEG_off_5DEG_amp');
 save('transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp');
+save('ext_transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp.mat','ext_transfer_ACE4A_ACE5A_0DEG_off_5DEG_amp');

@@ -16,7 +16,7 @@ load('currentACE7_stability_ACE6A_ACE7D_0DEG_off_5DEG_amp.mat');
 % sysACE7_stab_ACE6A_ACE7D_0DEG_off_5DEG_amp = tfest(responseACE6,3);
 % Response estimation
 window = 1024;
-maxFreq = 25;
+maxFreq = 30;
 minFreq = 0.5;
 rangefreq_ACE6A_ACE7D_0DEG_off_5DEG_amp = (round(window*minFreq*0.5/62.5)+1):(round(window*maxFreq*0.5/62.5)+1);
 [transfer_ACE6A_ACE7D_0DEG_off_5DEG_amp,freqDemandRam_ACE6A_ACE7D_0DEG_off_5DEG_amp]= tfestimate(demand_stability_ACE6A_ACE7D_0DEG_off_5DEG_amp.data,...

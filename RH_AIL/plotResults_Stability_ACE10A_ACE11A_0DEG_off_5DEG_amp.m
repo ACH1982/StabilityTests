@@ -12,20 +12,12 @@ transferCL = transfer_ACE10A_ACE11A_0DEG_off_5DEG_amp;
 for i=1:length(freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp)
     transferOL(i) = transferCL(i)/(1-transferCL(i));
 end
-% yyaxis right
-% semilogx(freqDemandRamACE10_ACE10A_0DEG_off_5DEG_amp(rangefreq_ACE10A_0DEG_off_5DEG_amp),...
-%     20*log10(abs(transferOL(rangefreq_ACE10A_0DEG_off_5DEG_amp))))
-% yyaxis left
-% semilogx(freqDemandRamACE10_ACE10A_0DEG_off_5DEG_amp(rangefreq_ACE10A_0DEG_off_5DEG_amp),...
-%      angle(transferOL(rangefreq_ACE10A_0DEG_off_5DEG_amp))*180/pi),grid
-mag = abs(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp));
-phase = angle(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp))*180/pi;
-subplot(1,2,1)
-margin(mag,phase,freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp)*2*pi);
-subplot(1,2,2)
-yyaxis right
-semilogx(freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp),...
-    20*log10(abs(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp))))
-yyaxis left
-semilogx(freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp),...
-     angle(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp))*180/pi),grid
+mag_10A_11A = abs(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp));
+phase_10A_11A = angle(transferOL(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp))*180/pi;
+[GM_10A_11A,PM_10A_11A,freqGM_10A_11A,freqPM_10A_11A] = margin(mag_10A_11A,phase_10A_11A,...
+    freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp(rangefreq_ACE10A_ACE11A_0DEG_off_5DEG_amp));
+minFreq = 0.5; 
+window = 1024;
+stabRangeFreq = (round(window*minFreq*0.5/62.5)+1):(round(window*max(freqGM_10A_11A,freqPM_10A_11A)*0.5/62.5)+1);
+margin(mag_10A_11A(stabRangeFreq),phase_10A_11A(stabRangeFreq),freqDemandRam_ACE10A_ACE11A_0DEG_off_5DEG_amp(stabRangeFreq)*2*pi);
+

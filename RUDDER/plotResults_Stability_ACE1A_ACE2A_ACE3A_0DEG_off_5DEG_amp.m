@@ -13,33 +13,12 @@ transferCL = transfer_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp;
 for i=1:length(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp)
     transferOL(i) = transferCL(i)/(1-transferCL(i));
 end
-yyaxis right
-semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-    20*log10(abs(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))))
-yyaxis left
-semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-     angle(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi),grid
-mag = abs(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp));
-phase = angle(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi;
-subplot(1,2,1)
-margin(mag,phase,freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp)*2*pi);
-subplot(1,2,2)
-yyaxis right
-semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-    20*log10(abs(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))))
-yyaxis left
-semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-     angle(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi),grid
-
- 
-% magCL = abs(transferCL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp));
-% phaseCL = angle(transferCL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi;
-% subplot(1,2,1)
-% margin(magCL,phaseCL,freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp)*2*pi);
-% subplot(1,2,2)
-% yyaxis right
-% semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-%     20*log10(abs(transferCL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))))
-% yyaxis left
-% semilogx(freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp),...
-%      angle(transferCL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi),grid
+mag_1A_2A_3A = abs(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp));
+phase_1A_2A_3A = angle(transferOL(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp))*180/pi;
+[GM_1A_2A_3A,PM_1A_2A_3A,freqGM_1A_2A_3A,freqPM_1A_2A_3A] = margin(mag_1A_2A_3A,phase_1A_2A_3A,...
+    freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(rangefreq_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp));
+minFreq = 0.5; 
+window = 1024;
+%stabRangeFreq = (round(window*minFreq*0.5/62.5)+1):(round(window*max(freqGM_1A_2A_3A,freqPM_1A_2A_3A)*0.5/62.5)+1);
+stabRangeFreq = (round(window*minFreq*0.5/62.5)+1):(round(window*20*0.5/62.5)+1);
+margin(mag_1A_2A_3A(stabRangeFreq),phase_1A_2A_3A(stabRangeFreq),freqDemandRam_ACE1A_ACE2A_ACE3A_0DEG_off_5DEG_amp(stabRangeFreq)*2*pi);
